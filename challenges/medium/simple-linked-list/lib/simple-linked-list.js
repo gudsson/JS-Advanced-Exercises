@@ -48,15 +48,49 @@ class SimpleLinkedList {
   }
 
   push(item) {
-    this.list.push(new Element(item));
+    let element = (this.size() > 0) ?
+      new Element(item, this.head()) : new Element(item);
+
+    this.list.push(element);
   }
 
-  // peek() {
-  //   return this.list[]
-  // }
-
   head() {
-    return this.list[0];
+    return this.list[this.size() - 1];
+  }
+
+  peek() {
+    let item = this.head();
+    return (item) ? item.datum() : null;
+  }
+
+  pop() {
+    return this.list.pop().datum();
+  }
+
+  static fromArray(arr) {
+    let list = new SimpleLinkedList();
+    if (!arr) return list;
+
+    arr.slice().reverse().forEach(data => {
+      list.push(data);
+    });
+
+    return list;
+  }
+
+  toArray() {
+    return this.list.map(element => element.datum()).reverse();
+  }
+
+  reverse() {
+    this.list.reverse();
+
+    for (let idx = 1; idx < this.size(); idx++) {
+      this.list[idx].nextPointer = this.list[idx - 1];
+    }
+
+    this.list[0].nextPointer = null;
+    return this;
   }
 }
 
