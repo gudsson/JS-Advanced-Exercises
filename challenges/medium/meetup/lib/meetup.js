@@ -40,7 +40,81 @@
 // teenth.
 
 class Meetup {
+  constructor(year, month) {
+    this.year = year;
+    this.month = month - 1;
+  }
 
+  day(weekday, schedule) {
+    let dayNumber = Meetup.DAY_NAMES.indexOf(weekday.toLowerCase());
+    let dayType = schedule.toLowerCase();
+    switch (schedule.toLowerCase()) {
+      case 'last':
+        return this._getLast(dayNumber);
+      case 'teenth':
+        return this._getTeenth(dayNumber);
+      default:
+        return this._getOrdinal(dayNumber, dayType);
+    }
+  }
+
+  _getTeenth(dayNumber) {
+    let date = new Date(this.year, this.month, 13); // start on 13th
+
+    // loop to find first instance of desired DOW
+    while (date.getDay() !== dayNumber) {
+      date.setDate(date.getDate() + 1);
+    }
+
+    return new Date(this.year, this.month, date.getDate());
+  }
+
+  _getLast(dayNumber) {
+    let date = new Date(this.year, this.month + 1, 0);
+
+    // loop backwards to find first instance of desired DOW
+    while (date.getDay() !== dayNumber) {
+      date.setDate(date.getDate() - 1);
+    }
+
+    return new Date(this.year, this.month, date.getDate());
+  }
+
+  _getOrdinal(dayNumber, dayType) {
+    let ordinal = Meetup.SCHEDULE_OPTIONS[dayType];
+    let date = new Date(this.year, this.month, 1);
+    let lastDate = new Date(this.year, this.month + 1, 0).getDate();
+
+    // loop to find first instance of desired DOW
+    while (date.getDay() !== dayNumber) {
+      date.setDate(date.getDate() + 1);
+    }
+
+    this.date = date.getDate() + (7 * (ordinal - 1));
+
+    if (this.date > lastDate) return null;
+
+    return new Date(this.year, this.month, this.date);
+
+  }
+
+  static DAY_NAMES = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday'
+  ]
+
+  static SCHEDULE_OPTIONS = {
+    first: 1,
+    second: 2,
+    third: 3,
+    fourth: 4,
+    fifth: 5
+  }
 }
 
 module.exports = Meetup;
