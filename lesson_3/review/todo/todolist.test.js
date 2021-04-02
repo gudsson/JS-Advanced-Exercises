@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
-const Todo = require('../todo');
-const TodoList = require('../todolist');
+const Todo = require('./todo');
+const TodoList = require('./todolist');
 
 describe('TodoList', () => {
   let todo1;
