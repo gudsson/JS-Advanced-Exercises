@@ -1,23 +1,23 @@
-let translate = require('./protein-translation.js');
+let translate = require('../lib/protein-translation.js');
 
 describe("ProteinTranslation", () => {
   test("Empty RNA has no proteins", () => {
     expect(translate()).toEqual([]);
   });
 
-  xtest("Methionine codon translates into protein", () => {
+  test("Methionine codon translates into protein", () => {
     expect(translate("AUG")).toEqual(["Methionine"]);
   });
 
-  xtest("Phenylalanine codons translate into protein", () => {
+  test("Phenylalanine codons translate into protein", () => {
     expect(translate("UUCUUU")).toEqual(["Phenylalanine", "Phenylalanine"]);
   });
 
-  xtest("Leucine codons translate into protein", () => {
+  test("Leucine codons translate into protein", () => {
     expect(translate("UUAUUG")).toEqual(["Leucine", "Leucine"]);
   });
 
-  xtest("Serine codons translate into protein", () => {
+  test("Serine codons translate into protein", () => {
     expect(translate("UCUUCCUCAUCG")).toEqual([
       "Serine",
       "Serine",
@@ -26,31 +26,31 @@ describe("ProteinTranslation", () => {
     ]);
   });
 
-  xtest("Tyrosine codons translate into protein", () => {
+  test("Tyrosine codons translate into protein", () => {
     expect(translate("UAUUAC")).toEqual(["Tyrosine", "Tyrosine"]);
   });
 
-  xtest("Cysteine codons translate into protein", () => {
+  test("Cysteine codons translate into protein", () => {
     expect(translate("UGUUGC")).toEqual(["Cysteine", "Cysteine"]);
   });
 
-  xtest("Tryptophan codon translates into protein", () => {
+  test("Tryptophan codon translates into protein", () => {
     expect(translate("UGG")).toEqual(["Tryptophan"]);
   });
 
-  xtest("Sequence starts with stop codon 1", () => {
+  test("Sequence starts with stop codon 1", () => {
     expect(translate("UAAUUUUUA")).toEqual([]);
   });
 
-  xtest("Sequence starts with stop codon 2", () => {
+  test("Sequence starts with stop codon 2", () => {
     expect(translate("UAGAUGUAU")).toEqual([]);
   });
 
-  xtest("Sequence starts with stop codon 3", () => {
+  test("Sequence starts with stop codon 3", () => {
     expect(translate("UGAUGU")).toEqual([]);
   });
 
-  xtest("Small RNA strand", () => {
+  test("Small RNA strand", () => {
     expect(translate("AUGUUUUCU")).toEqual([
       "Methionine",
       "Phenylalanine",
@@ -58,7 +58,7 @@ describe("ProteinTranslation", () => {
     ]);
   });
 
-  xtest("Stop codon ends translation", () => {
+  test("Stop codon ends translation", () => {
     expect(translate("AUGUUUUCUUAAAUG")).toEqual([
       "Methionine",
       "Phenylalanine",
@@ -66,7 +66,7 @@ describe("ProteinTranslation", () => {
     ]);
   });
 
-  xtest("Invalid codon throws error", () => {
+  test("Invalid codon throws error", () => {
     expect(() => translate("LOL")).toThrow(new Error("Invalid codon"));
   });
 });
