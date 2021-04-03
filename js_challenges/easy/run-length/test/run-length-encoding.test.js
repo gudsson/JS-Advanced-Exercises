@@ -59,23 +59,23 @@ describe("run-length decode a string", () => {
     );
   });
 
-  xtest("decode string with repeated characters mixed in with single characters", () => {
+  test("decode string with repeated characters mixed in with single characters", () => {
     expect(functions.decode("12WB")).toEqual(
       "WWWWWWWWWWWWB"
     );
   });
 
-  xtest("decode string with multiple whitespaces", () => {
+  test("decode string with multiple whitespaces", () => {
     expect(functions.decode("2 hs2q q2w2 ")).toEqual("  hsqq qww  ");
   });
 
-  xtest("decode string with lowercase characters", () => {
+  test("decode string with lowercase characters", () => {
     expect(functions.decode("2a3b4c")).toEqual("aabbbcccc");
   });
 });
 
 describe("run-length encode and then decode", () => {
-  xtest("encode followed by decode gives original string", () => {
+  test("encode followed by decode gives original string", () => {
     expect(functions.decode(functions.encode("zzz ZZ  zZ"))).toEqual("zzz ZZ  zZ");
   });
 });

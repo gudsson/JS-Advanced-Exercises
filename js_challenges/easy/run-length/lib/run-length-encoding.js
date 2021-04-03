@@ -38,22 +38,18 @@ const functions = {
       return (packet.length === 1) ? packet : `${packet.length}${packet[0]}`;
     }).join('');
   },
+
   decode(string) {
     if (!string) return '';
+ 
+    let packets = string.match(/(\d{1,}\D)|(\D)/gi);
 
-    let res = [];
-
-    for (let idx = 0; idx < string.length; idx++) {
-      if (Number.isInteger(+string[idx])) {
-        res.push(string[idx + 1].repeat(+string[idx]));
-        idx++;
-      } else res.push(string[idx]);
-    }
-
-    return res.join('');
+    return packets.map(packet => {
+      let multiplier = parseInt(packet);
+      if (multiplier) return packet[packet.length - 1].repeat(multiplier);
+      return packet[0];
+    }).join('');
   }
 }
-
-// console.log(functions.encode('AABCCCDEEE'));
 
 module.exports = functions;
