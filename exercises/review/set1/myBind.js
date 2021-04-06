@@ -2,22 +2,20 @@
 // myBind() Improved //
 ///////////////////////
 
-// Our earlier implementation of Function.prototype.bind as
-// myBind was simplistic. Function.prototype.bind has another
-// trick up its sleeve besides hard-binding functions to context
-// objects. It's called partial function application. Read the MDN
-// documentation to learn more about partial function application.
-// (We'll also cover it in a later course.)
+// Our earlier implementation of Function.prototype.bind as myBind was
+// simplistic. Function.prototype.bind has another trick up its sleeve
+// besides hard-binding functions to context objects. It's called partial
+// function application. Read the MDN documentation to learn more about
+// partial function application. (We'll also cover it in a later course.)
 
-// Alter the myBind function written in the previous exercise to
-// support partial function application.
+// Alter the myBind function written in the previous exercise to support
+// partial function application.
 
-function myBind(func, ctx, ...args) {
-  let partialArgs = args
-  return (...additionalArgs) => {
-    let allArgs = [...partialArgs, ...additionalArgs];
-    return func.apply(ctx, allArgs);
-  }
+function myBind(func, ctx, ...args1) {
+  return (...args2) => {
+    let args = [...args1, ...args2];
+    return func.apply(ctx, args);
+  };
 }
 
 function addNumbers(a, b) {

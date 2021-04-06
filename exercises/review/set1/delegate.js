@@ -16,7 +16,7 @@
 function delegate(obj, method, ...args) {
   return () => {
     return obj[method].call(obj, ...args);
-  }
+  };
 }
 
 // Here's a sample run;

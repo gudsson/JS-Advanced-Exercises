@@ -77,10 +77,21 @@ const Professional = {
   payTax() {
     console.log(`${this.firstName} ${this.lastName} Paying Taxes`);
   }
+};
+
+function delegate(caller, methodOwner, methodName) {
+  return function(...args) {
+    return methodOwner[methodName].apply(caller, ...args);
+  };
 }
 
 function extend(instance, mixin) {
-  Object.assign(instance, mixin);
+  let methodNames = Object.keys(mixin);
+
+  methodNames.forEach(name => {
+    instance[name] = delegate(instance, mixin, name);
+  });
+
   return instance;
 }
 
